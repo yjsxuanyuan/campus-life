@@ -1,0 +1,472 @@
+(function($){
+        var head_image_url = window.location.protocol +'//'+ window.location.host +'/PeoApi/Head/';
+        $(function() {        
+            if(window.location.href.indexOf("content/directory") != -1){
+                var language_lang;
+                if(window.location.href.indexOf("zh-hans") == -1) {
+                    language_lang = "en";
+                    $("#block-views-yellow-book-view-block-1 .search-intro").html("Type in your name, phone or office.");
+                    $("#yellowpage-search-v2").val("Search");
+                    $(".y-search-results-sum .search-result-result").html("results")
+                } else {
+                    language_lang = "zh-cn";
+                }
+
+                var global_flag = {
+                depB: false,
+                perB: false,
+                depArr: [],
+                perArr: []
+                }
+                $.ajax({
+                    type: "Get",
+                    url: "/interface/yellowbook",
+                    datatype: "JSON",
+                    success: function(result_json) {
+                        global_flag.depB = true;
+                        global_flag.depArr = JSON.parse(result_json);
+                        if(global_flag.depB && global_flag.perB) {
+                            show_page(global_flag.depArr, global_flag.perArr);
+                        }
+                    }
+                });
+                $.ajax({
+                    type: "Get",
+                    url: "/interface/yellowbookd",
+                    datatype: "JSON",
+                    success: function(result_json) {
+                        global_flag.perB = true;
+                        global_flag.perArr = JSON.parse(result_json);
+                        if(global_flag.depB && global_flag.perB) {
+                            show_page(global_flag.depArr, global_flag.perArr);
+                        }
+                    }
+                });
+                $(document).on("click",".y-l-DepNo",function(){
+                    $(this).siblings(".person-info").toggleClass("show-item-yellow-book");
+                    $(this).toggleClass("active");
+                });
+
+            }
+        });
+        function sortNumber(a,b) { return a - b }
+        function show_page(department, directory) {
+            var language_lang;
+            if(window.location.href.indexOf("zh-hans") == -1) {
+                language_lang = "en";
+            } else {
+                language_lang = "zh-hans";
+            }
+             var rank_rank = [];
+            for(var o = 0; o < department.length; o++) {
+                rank_rank.push(department[o].Rank);
+                rank_rank.sort(sortNumber);
+            }
+            for(var t = 0;t<rank_rank.length;t++){
+                var get_rank = rank_rank[t];
+                for(var i = 0; i < department.length; i++) {
+                    var dep_index = department[i];
+                    var dep_rank = dep_index.Rank;
+                    if(dep_rank != null && get_rank != null && dep_rank==get_rank) {
+                        var line_line = '<div class="deppart-wrap my-y-l">';
+                        if(language_lang == "zh-hans") {
+                            line_line += '<div class="deptitle y-l-DepNo">' + dep_index.DepChineseName + '</div>';
+                            for(var j = 0; j < directory.length; j++) {
+                                var dep_person = directory[j];
+                                var dep_rank_p = dep_person.Rank.toString();
+                                var all_head_image_url = head_image_url + dep_person.EmployeeNo +'.png';
+                                // console.log(dep_rank_p);
+                                if(dep_rank_p.indexOf(".") == -1) {
+                                    if(dep_rank_p == dep_rank) {
+                                        
+                                        var person_line = '<div class="person-info y-l-info">';  
+                                        $.ajax({
+                                            type:'get',
+                                            async: false, 
+                                            url:all_head_image_url,
+                                            success:function(){
+                                                person_line += '<div class="y-l-left"><img src="'+all_head_image_url+'"></div>';
+                                            },
+                                            error:function(){
+                                                person_line += '<div class="y-l-left"><img src="'+all_head_image_url+'" style="display:none;"></div>';
+                                            }
+                                        })
+                                        person_line += '<div class="person-more y-l-info-more"><div class="person-name y-l-name"><span class="yb-search-result">' + dep_person.EmployeeName + '</span></div>';
+                                        if(dep_person.Title==null){
+                                            person_line += '<div class="person-title y-l-title"><span>职务：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-title y-l-title"><span>职务：</span><span class="yb-search-result">' + dep_person.Title + '</span></span></div>';
+                                        }
+                                        if(dep_person.BusinessPhone==null){
+                                            person_line += '<div class="person-phone y-l-phone"><span>办公电话：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-phone y-l-phone"><span>办公电话：</span><span class="yb-search-result">' + dep_person.BusinessPhone + '</span></span></div>';
+                                        }
+                                        if(dep_person.Email==null){
+                                            person_line += '<div class="person-email y-l-email"><span>Email：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-email y-l-email"><span>Email：</span><span class="yb-search-result"><a href="mailto:'+dep_person.Email+'">' + dep_person.Email + '</a></span></span></div>';
+                                        }
+                                        if(dep_person.O365==null){
+                                            person_line += '<div class="person-oemail y-l-oemail"><span>Office 365：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-oemail y-l-oemail"><span>Office 365：</span><span class="yb-search-result"><a href="mailto:'+dep_person.O365+'@intl.zju.edu.cn">' + dep_person.O365 + '@intl.zju.edu.cn</a></span></span></div>';
+                                        }
+                                        if(dep_person.OfficeLocation==null){
+                                            person_line += '<div class="person-location y-l-location"><span>办公室：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-location y-l-location"><span>办公室：</span><span class="yb-search-result">' + dep_person.OfficeLocation + '</span></span></div>';
+                                        }
+                                        if(dep_person.JobDescription!=null){
+                                            person_line += '<div class="person-jobdes y-l-jobdes"><span>岗位职责：</span><span class="yb-search-result">' + dep_person.JobDescription + '</span></span></div>';
+                                        }
+                                        person_line += '</div></div>';
+                                        line_line += person_line;
+                                    }
+                                } else {
+                                    var first_rank = dep_rank_p.split(".")[0];
+                                    if(first_rank == dep_rank) {
+                                        var person_line = '<div class="person-info y-l-info">';
+                                        $.ajax({
+                                            type:'get',
+                                            async: false, 
+                                            url:all_head_image_url,
+                                            success:function(){
+                                                person_line += '<div class="y-l-left"><img src="'+all_head_image_url+'"></div>';
+                                            },
+                                            error:function(){
+                                                person_line += '<div class="y-l-left"><img src="'+all_head_image_url+'" style="display:none;"></div>';
+                                            }
+                                        })
+                                        person_line += '<div class="person-more y-l-info-more"><div class="person-name y-l-name"><span class="yb-search-result">' + dep_person.EmployeeName + '</span></div>';
+                                        if(dep_person.Title==null){
+                                            person_line += '<div class="person-title y-l-title"><span>职务：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-title y-l-title"><span>职务：</span><span class="yb-search-result">' + dep_person.Title + '</span></span></div>';
+                                        }
+                                        if(dep_person.BusinessPhone==null){
+                                            person_line += '<div class="person-phone y-l-phone"><span>办公电话：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-phone y-l-phone"><span>办公电话：</span><span class="yb-search-result">' + dep_person.BusinessPhone + '</span></span></div>';
+                                        }
+                                        if(dep_person.Email==null){
+                                            person_line += '<div class="person-email y-l-email"><span>Email：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-email y-l-email"><span>Email：</span><span class="yb-search-result"><a href="mailto:'+dep_person.Email+'">' + dep_person.Email + '</a></span></span></div>';
+                                        }
+                                        if(dep_person.O365==null){
+                                            person_line += '<div class="person-oemail y-l-oemail"><span>Office 365：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-oemail y-l-oemail"><span>Office 365：</span><span class="yb-search-result"><a href="mailto:'+dep_person.O365+'@intl.zju.edu.cn">' + dep_person.O365 + '@intl.zju.edu.cn</a></span></span></div>';
+                                        }
+                                        if(dep_person.OfficeLocation==null){
+                                            person_line += '<div class="person-location y-l-location"><span>办公室：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-location y-l-location"><span>办公室：</span><span class="yb-search-result">' + dep_person.OfficeLocation + '</span></span></div>';
+                                        }
+                                        if(dep_person.JobDescription!=null){
+                                            person_line += '<div class="person-jobdes y-l-jobdes"><span>岗位职责：</span><span class="yb-search-result">' + dep_person.JobDescription + '</span></span></div>';
+                                        }
+
+                                        person_line += '</div></div>';
+                                        line_line += person_line;
+                                    }
+                                }
+                            }
+                        } else {
+                            line_line += '<div class="deptitle y-l-DepNo">' + dep_index.DepName + '</div>';
+                            for(var j = 0; j < directory.length; j++) {
+                                var dep_person = directory[j];
+                                var dep_rank_p = dep_person.Rank.toString();
+                                var all_head_image_url = head_image_url + dep_person.EmployeeNo +'.png';
+                                // console.log(dep_rank_p);
+                                if(dep_rank_p.indexOf(".") == -1) {
+                                    if(dep_rank_p == dep_rank) {
+                                        var person_line = '<div class="person-info y-l-info">';
+                                        $.ajax({
+                                            type:'get',
+                                            async: false, 
+                                            url:all_head_image_url,
+                                            success:function(){
+                                                person_line += '<div class="y-l-left"><img src="'+all_head_image_url+'"></div>';
+                                            },
+                                            error:function(){
+                                                person_line += '<div class="y-l-left"><img src="'+all_head_image_url+'" style="display:none;"></div>';
+                                            }
+                                        })
+                                        person_line += '<div class="person-more y-l-info-more"><div class="person-name y-l-name"><span class="yb-search-result">' + dep_person.EnglishName + '</span></div>';
+                                        // if(dep_person.Title==null){
+                                        //     person_line += '<div class="person-title y-l-title"><span>Title:</span></span></div>';
+                                        // }else{
+                                        //     person_line += '<div class="person-title y-l-title"><span>Title:</span><span class="yb-search-result">' + dep_person.EnglishTitle + '</span></span></div>';
+                                        // }
+                                        if(dep_person.BusinessPhone==null){
+                                            person_line += '<div class="person-phone y-l-phone"><span>Office Tell:</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-phone y-l-phone"><span>Office Tell:</span><span class="yb-search-result">' + dep_person.BusinessPhone + '</span></span></div>';
+                                        }
+                                        if(dep_person.Email==null){
+                                            person_line += '<div class="person-email y-l-email"><span>Email：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-email y-l-email"><span>Email：</span><span class="yb-search-result"><a href="mailto:'+dep_person.Email+'">' + dep_person.Email + '</a></span></div>';
+                                        }
+                                        if(dep_person.O365==null){
+                                            person_line += '<div class="person-oemail y-l-oemail"><span>Office 365：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-oemail y-l-oemail"><span>Office 365：</span><span class="yb-search-result"><a href="mailto:'+dep_person.O365+'@intl.zju.edu.cn">' + dep_person.O365 + '@intl.zju.edu.cn</span></span></div>';
+                                        }
+                                        if(dep_person.OfficeLocation==null){
+                                            person_line += '<div class="person-location y-l-location"><span>Location:</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-location y-l-location"><span>Location:</span><span class="yb-search-result">' + dep_person.OfficeLocation + '</span></span></div>';
+                                        }
+                                        person_line += '</div></div>';
+                                        line_line += person_line;
+                                    }
+                                } else {
+                                    var first_rank = dep_rank_p.split(".")[0];
+                                    if(first_rank == dep_rank) {
+                                        var person_line = '<div class="person-info y-l-info">';
+                                        $.ajax({
+                                            type:'get',
+                                            async: false, 
+                                            url:all_head_image_url,
+                                            success:function(){
+                                                person_line += '<div class="y-l-left"><img src="'+all_head_image_url+'"></div>';
+                                            },
+                                            error:function(){
+                                                person_line += '<div class="y-l-left"><img src="'+all_head_image_url+'" style="display:none;"></div>';
+                                            }
+                                        })
+                                        person_line += '<div class="person-more y-l-info-more"><div class="person-name y-l-name"><span class="yb-search-result">' + dep_person.EnglishName + '</span></div>';
+                                        // if(dep_person.Title==null){
+                                        //     person_line += '<div class="person-title y-l-title"><span>Title:</span></span></div>';
+                                        // }else{
+                                        //     person_line += '<div class="person-title y-l-title"><span>Title:</span><span class="yb-search-result">' + dep_person.EnglishTitle + '</span></span></div>';
+                                        // }
+                                        if(dep_person.BusinessPhone==null){
+                                            person_line += '<div class="person-phone y-l-phone"><span>Office Tell:</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-phone y-l-phone"><span>Office Tell:</span><span class="yb-search-result">' + dep_person.BusinessPhone + '</span></div>';
+                                        }
+                                        if(dep_person.Email==null){
+                                            person_line += '<div class="person-email y-l-email"><span>Email：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-email y-l-email"><span>Email：</span><span class="yb-search-result"><a href="mailto:'+dep_person.Email+'">' + dep_person.Email + '</a></span></span></div>';
+                                        }
+                                        if(dep_person.O365==null){
+                                            person_line += '<div class="person-oemail y-l-oemail"><span>Office 365：</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-oemail y-l-oemail"><span>Office 365：</span><span class="yb-search-result"><a href="mailto:'+dep_person.O365+'@intl.zju.edu.cn">' + dep_person.O365 + '@intl.zju.edu.cn</a></span></span></div>';
+                                        }
+                                        if(dep_person.OfficeLocation==null){
+                                            person_line += '<div class="person-location y-l-location"><span>Location:</span></span></div>';
+                                        }else{
+                                            person_line += '<div class="person-location y-l-location"><span>Location:</span><span class="yb-search-result">' + dep_person.OfficeLocation + '</span></div>';
+                                        }
+                                        person_line += '</div></div>';
+                                        line_line += person_line;
+                                    }
+                                }
+                            } 
+                        }
+                        line_line += '</div>';
+                        $("#yellow-book-wrap").append(line_line);
+                    }
+                    
+                }
+            }
+            
+            var namearry = $("#yellow-book-wrap .person-name");
+            var personarry = $("#yellow-book-wrap .person-info");
+            var namearry_item = [],
+                person_image_item = [],
+                person_title_item =[],
+                person_phone_item=[],
+                person_email_item =[],
+                person_oemail_item = [],
+                person_location_item = [],
+                person_jobdes_item = [];
+            for(var k = 0; k < namearry.length; k++) {
+                namearry_item.push(namearry.eq(k).find(".yb-search-result").html());
+                person_image_item.push(personarry.eq(k).find(".y-l-left").html());
+                person_title_item.push(personarry.eq(k).find(".person-title .yb-search-result").html());
+                person_phone_item.push(personarry.eq(k).find(".person-phone .yb-search-result").html());
+                person_email_item.push(personarry.eq(k).find(".person-email .yb-search-result").html());
+                person_oemail_item.push(personarry.eq(k).find(".person-oemail .yb-search-result").html());
+                person_location_item.push(personarry.eq(k).find(".person-location .yb-search-result").html());
+                person_jobdes_item.push(personarry.eq(k).find(".person-jobdes .yb-search-result").html());
+            }
+            $('input#ykey').keydown(function(e) {
+                if(e.which == 13) {
+                    $('#yellowpage-search-v2').click();
+                    return false;
+                }
+            });
+            $("#yellowpage-search-v2").click(function() {
+                //      var 
+            $("#yellowpage-search-return .y-search-results .person-info").remove();
+
+            var key_word = $("#ykey").val();
+            var key_array = [];
+            var key_index;
+            //名字搜索
+            if(key_word!= ""){
+                for(var i=0;i<namearry_item.length;i++){
+                    if(namearry_item[i]==key_word){
+                        key_array.push(i);
+                    }else if(namearry_item[i].indexOf(key_word)>=0){
+                        key_array.push(i);
+                    }
+                }
+                result_around(key_array);
+                
+                //title
+                if(key_array.length==0){
+                    for(var i=0;i<person_title_item.length;i++){
+                        if(person_title_item[i]==key_word){
+                            key_array.push(i);
+                        }
+                    }
+                    result_around(key_array);
+                }
+                //电话
+                if(key_array.length==0){
+                    for(var i=0;i<person_phone_item.length;i++){
+                        if(person_phone_item[i]==key_word){
+                            key_array.push(i);
+                        }
+                    }
+                    result_around(key_array);
+                }
+                //email
+                if(key_array.length==0){
+                    for(var i=0;i<person_email_item.length;i++){
+                        if(person_email_item[i]==key_word){
+                            key_array.push(i);
+                        }
+                    }
+                    result_around(key_array);
+                }
+                //oemail
+                if(key_array.length==0){
+                    for(var i=0;i<person_oemail_item.length;i++){
+                        if(person_oemail_item[i]==key_word){
+                            key_array.push(i);
+                        }
+                    }
+                    result_around(key_array);
+                }
+                //location
+                if(key_array.length==0){
+                    for(var i=0;i<person_location_item.length;i++){
+                        if(person_location_item[i]==key_word){
+                            key_array.push(i);
+                        }
+                    }
+                    result_around(key_array);
+                }
+            }
+            
+            function result_around(key_array){
+                $(".total-search-num").html(key_array.length);
+                if(key_array.length==1){
+                    key_index=key_array[0];
+                    get_item_result(key_word,key_index);
+                }else if(key_array.length > 1){
+                    for(var j=0;j<key_array.length;j++){
+                        key_index=key_array[j];
+                        get_item_result(key_word,key_index);
+                    }
+                }
+            }
+
+                function get_item_result(key_word,key_index){
+                    var language_lang;
+                    if(window.location.href.indexOf("zh-hans") == -1) {
+                        language_lang = "en";
+                    } else {
+                        language_lang = "zh-hans";
+                    }
+                    if(language_lang == "zh-hans"){
+                        var result_line_item = '<div class="person-info y-l-info"><div class="y-l-left">'
+                                            +person_image_item[key_index]+'</div><div class="person-more y-l-info-more"><div class="person-name y-l-name"><span class="yb-search-result">'
+                                            +namearry_item[key_index]+'</span></div><div class="person-title y-l-title"><span>职务：</span>';
+                                            if(person_title_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_title_item[key_index]+'</span></div>'
+                                            }
+                                            result_line_item +='<div class="person-phone y-l-phone"><span>办公电话：</span>';
+                                            if(person_phone_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_phone_item[key_index]+'</span></div>'
+                                            }
+                                            result_line_item +='<div class="person-email y-l-email"><span>Email：</span>';
+                                            if(person_email_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_email_item[key_index]+'</span></div>';
+                                            }
+                                            result_line_item +='<div class="person-email y-l-oemail"><span>Office 365：</span>';
+                                            if(person_oemail_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_oemail_item[key_index]+'</span></div>';
+                                            }
+                                            result_line_item +='<div class="person-location y-l-location"><span>办公室：</span>';
+                                            if(person_location_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div></div></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_location_item[key_index]+'</span></div>';
+                                            }
+                                            if(person_jobdes_item[key_index]==undefined){
+                                                result_line_item +='</div></div>';
+                                            }else{
+                                                result_line_item +='<div class="person-jobdes y-l-jobdes"><span>岗位职责：</span><span class="yb-search-result">'+person_jobdes_item[key_index]+'</span></div></div></div>';
+                                            }
+                    }else{
+                        var result_line_item = '<div class="person-info y-l-info"><div class="y-l-left">'
+                                            +person_image_item[key_index]+'</div><div class="person-more y-l-info-more"><div class="person-name y-l-name"><span class="yb-search-result">'
+                                            +namearry_item[key_index]+'</span></div><div class="person-title y-l-title"><span>Title：</span>';
+                                            if(person_title_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_title_item[key_index]+'</span></div>'
+                                            }
+                                            result_line_item +='<div class="person-phone y-l-phone"><span>Office Tell:</span>';
+                                            if(person_phone_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_phone_item[key_index]+'</span></div>'
+                                            }
+                                            result_line_item +='<div class="person-email y-l-email"><span>Email：</span>';
+                                            if(person_email_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_email_item[key_index]+'</span></div>';
+                                            }
+                                            result_line_item +='<div class="person-email y-l-oemail"><span>Office 365：</span>';
+                                            if(person_oemail_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_oemail_item[key_index]+'</span></div>';
+                                            }
+                                            result_line_item +='<div class="person-location y-l-location"><span>OfficeLocation:</span>';
+                                            if(person_location_item[key_index]==undefined){
+                                                result_line_item +='<span class="yb-search-result"></span></div></div></div>';
+                                            }else{
+                                                result_line_item +='<span class="yb-search-result">'+person_location_item[key_index]+'</span></div></div></div>';
+                                            }
+                    }
+                    
+                    $("#yellowpage-search-return .y-search-results").append(result_line_item);
+                    $("#yellowpage-search-return .y-search-results").show();
+                    $("#yellowpage-search-return .y-search-results-sum").show();
+                    
+                }
+            }); 
+            
+        }
+})(jQuery)

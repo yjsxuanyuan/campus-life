@@ -1,0 +1,214 @@
+(function($) {
+        
+    $(function(){
+                
+        if ($('form#search-block-form').length > 0) {
+            $('form#search-block-form input#edit-search-block-form--2').attr('value', '');
+        }
+        
+        $('.front #block-views-banner-slider-show-block .views-field-nothing').each(function(){
+            if ($(this).find('a').attr('href') === '') {
+                $(this).hide();
+            }
+       });
+       
+       if (typeof(Drupal.settings.node_type) != undefined ) {
+        var type = new Array('news', 'events', 'media', 'recruit', 'dangjian', 'union_gongz','news_affairs','events_affairs');
+            if($.inArray(Drupal.settings.node_type, type) === -1) {
+                $('.not-front').find('h2.node__title').hide();
+            }
+            else{
+                $('.not-front').find('h2.node__title').show();
+            } 
+        } else {
+            $('.not-front').find('h2.node__title').hide();
+        }
+        
+        $('.l-more-btn').click(function() {
+          $(this).parent().find(".l-more-content").toggle();
+        });
+        
+        $(".y-l-info").hide();
+        $(".y-l-DepNo").toggle(function() {
+            $(this).addClass("active");
+            }, function() {
+            $(this).removeClass("active");
+        });
+        $('.y-l-DepNo').click(function() {
+              $(this).parent().find(".y-l-info").toggle();  
+        });
+        
+        $("#yellowpage-search").click(function(){
+            //Ajax调用处理
+            var $akey = $("#ykey").val();
+            if($akey ==''){
+                  $akey='zjdxgjxq';
+            }
+            $.ajax({
+               type: "POST",
+               url:"/yellowpage/search/" + $akey,
+               success:function(html) {
+                   $("#yellowpage-search-return").html(html);
+               }
+            });
+            return false;
+        }); 
+        
+        $("#salary-its").click(function() {
+            //Ajax调用处理
+            var $start_month = $("#start-month").val();
+            var $end_month = $("#end-month").val();
+            var $start_year = $("#start-year").val();
+            var $end_year = $("#start-year").val();
+            console.log('请求开始');
+            $.ajax({
+                type: "POST",
+            url: "/salary-its/" + $start_year + "/" + $start_month + "/" + $end_year + "/" + $end_month,
+            success: function(html) {
+                console.log(html);
+                console.log('123');
+            $("#salary-its-return").html(html);
+            },
+            error: function(e) {
+                $("#salary-its-return").html('查询失败');
+                    }
+             });
+                return false;
+        }); 
+        
+        $('.page-taxonomy-term .view-id-news_list_faqs_list.view-display-id-admission_faq_block .views-row .views-field-title').click(function() {
+          $(this).parent().find(".views-field-body").toggle();
+        });
+        
+        if($('.i18n-en .form-item-remember-me .option')) {
+            $('.i18n-en .form-item-remember-me .option').text('Stay signed in');
+        }
+        if($('.node-type-news.i18n-zh-hans .node-breadcrumb .node-breadcrumb-n .node_title_G .node_first_G')) {
+            $('.node-type-news.i18n-zh-hans .node-breadcrumb .node-breadcrumb-n .node_title_G .node_first_G').text('新闻');
+        }
+        if($('.node-type-events.i18n-zh-hans .node-breadcrumb .node-breadcrumb-n .node_title_G .node_first_G')) {
+            $('.node-type-events.i18n-zh-hans .node-breadcrumb .node-breadcrumb-n .node_title_G .node_first_G').text('活动');
+        }
+        
+        if ($('div.messages--status').length > 0) {
+            var lancode = Drupal.settings.pathPrefix;
+            if (lancode === 'zh-hans/') {
+                $('div.messages--status').find('p').empty().append('感谢您的关注和支持，您的反馈我们已经收到。');
+            }
+            if (lancode === 'en/') {
+                $('div.messages--status').find('p').empty().append('Thank you for your attention and support, we have received your feedback.');
+            }
+            $('div.messages--status').find('em').click(function(){
+                var last1 = document.referrer;
+                location.href = last1;
+            });
+        }
+        
+        $('div.view-foot-menu').find('a').each(function(){
+            if ($(this).html() === 'Feedback' || $(this).html() === '意见反馈') {
+                var link = $(this).attr('href');
+                $(this).attr('style', 'color:yellow;');
+                $(this).attr('href', link + '?last=' + document.location.pathname);
+            }
+        });
+        
+        $("input#edit-custom-search-blocks-form-1--2").focus(function(){
+            $(this).css("opacity","1");
+           // $("#edit-actions").hide();
+            $("#custom-search-blocks-form-1 #edit-actions--2").hide();
+            $("#custom-search-blocks-form-1 #edit-actions--3").hide();
+        });
+        
+        $('.page-global-search #edit-submit').click(function(){ 
+            if ($('.page-global-search').length >0 && $('#search-form').length >0) {
+                var keyword = $('input#edit-keys').val();
+                var action_url = '/' + Drupal.settings.pathPrefix + 'let/search/myzju/' + keyword;
+                $('#search-form').attr('action', action_url);
+            }
+        });
+        
+        //zd search
+        $("#edit-submit-1").click(function() {
+            var intl_search_keyword = $("#edit-keys-1").val();
+            if(typeof(intl_search_keyword) != "undefined"){
+                window.location.href="/let/search/global/"+intl_search_keyword;
+            }else{
+                window.location.href="/let/search/global/";
+            }
+        });
+        $("input#edit-keys-1").keydown(function(e) {
+            if(e.which == 13) {
+                $('#edit-submit-1').click();
+                return false;
+            }
+        });
+        //myzju
+        $("#edit-submit").click(function() {
+            var myzju_search_keyword = $("#edit-custom-search-blocks-form-1--2").val();
+            if(typeof(myzju_search_keyword) != "undefined"){
+                window.location.href="/let/search/myzju/"+myzju_search_keyword;
+            }else{
+                window.location.href="/let/search/myzju/";
+            }  
+        });
+        $("input#edit-custom-search-blocks-form-1--2").keydown(function(e) {
+            if(e.which == 13) {
+                $('#edit-submit').click();
+                return false;
+            }
+        });
+        
+        $(".csp-tab-con-wrap .views-row").eq(0).show();
+        $(".csp-clear .view-field_image").click(function(){
+            var num = $(".csp-clear .view-field_image").index(this);
+            $(".csp-tab-con-wrap .views-row").hide();
+            $(".csp-tab-con-wrap .views-row").eq(num).show();//.siblings().hide();
+        });
+        
+        var url = document.location.toString();
+    　　var arrUrl = url.split("?");
+        var para = arrUrl[1];
+    　　if(!para){
+        $(".page-allsearch .view-content").hide();
+        $(".page-allsearch .pager").hide();
+        }
+
+        //中英文显示
+        if(window.location.href.indexOf("/zh-hans") >= 0){
+            $("#block-views-calendar-block-1 .calander-edit a").html("编辑");
+            var a_link = "https://zjuintl.sharepoint.com/Lists/MeetingCalendar/calendar.aspx";
+            $("#block-views-calendar-block-1 .calander-edit a").attr("href",a_link);
+        }
+
+        $(function(){
+            $(".my-y-l .y-l-info .y-l-name img" ).each(function(){
+                $(this).load(function(){
+                    $(this).show();
+                })
+            })
+        })
+        $(function(){
+            $(".view-id-general_educational_affairs .item-list h3").click(function(){
+                $(this).parent().find("ul").slideToggle();
+            })
+        })
+        $(function(){
+            var local_search_url =window.location.pathname;
+            var local_search_index = local_search_url .lastIndexOf("\/");  
+            local_search_type  = local_search_url .substring(local_search_index + 1, local_search_url.length);
+            $("#edit-text-11").val(local_search_type);
+        })
+        
+        $("#edit-submitted-was-this-page-useful-1").click(function(){
+            $(".block-webform.student-module-left-webform .form-item.webform-component--please-tell-us").hide();
+        })
+        $("#edit-submitted-was-this-page-useful-2").click(function(){
+            $(".block-webform.student-module-left-webform .form-item.webform-component--please-tell-us").show();
+        })
+
+        //领导日程变红
+        // var name_name_red ='<span style="color:red;padding:0">（测试）</span>';
+        // $("#block-views-taxonomy-list-block-12 .views-row-last span.field-content a span").append(name_name_red);
+    });
+
+})(jQuery);
