@@ -36,22 +36,23 @@ html { }
 .public-service-a { display: flex;  margin: 0 auto; width: 200px; height: 200px;  border-radius: 100px; background-color: rgba(255,255,255,0.4)!important; color: #122c4c!important; flex-direction: column; justify-content:center; align-items:center;}
 .public-service-a img { width: 100px; }
 
-.club-culture { position: relative; width: 100%;  /*background-image: url(images/club-culture/background.jpg); background-repeat: no-repeat; background-size: cover; */}
-.culture { position: absolute; height: 100%; top: 0; right: 0;}
-.club { position: relative; height: 100%;}
-.club-culture-main { width: 60.9%;}
-.club-culture-main img { width: 100%; min-height: 32rem; vertical-align: middle; opacity: .9;}
+.club-culture { position: relative; width: 100%; padding-bottom: 10rem; margin-bottom: 8rem;/*background-image: url(images/club-culture/background.jpg); background-repeat: no-repeat; background-size: cover; */}
+.culture { position: absolute; top: 10rem; right: 0;}
+/*.culture:after { content: ""; display: block; visibility: visible; height: 100%; width: 100%;  position: absolute; top: 0; transform:  skewX(-39.2deg) translateX(18%); box-shadow: 0 0 25px 3px rgba(0,0,0,1);}*/
+.club { position: relative; }
+.club-culture-main { width: 70%;}
+.club-culture-main img { width: 100%; min-height: 20rem; vertical-align: middle; opacity: .9;}
 .club-des { width: 50%; height: 90%;}
 .culture-des { width: 50%; right: 0; height: 90%; }
-.des { position: absolute; top: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; word-wrap:break-word; }
+.des { position: absolute; z-index: 5; top: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; word-wrap:break-word; }
 .club-culture-a:hover { text-decoration: underline; }
 .club-culture-a { width: 60%; color: #f0f0ff!important;}
 .mobile-pic { display: none; }
 
 .students-affair { background-image: url(images/students-affair/background.png); background-repeat: no-repeat; background-size: cover; min-height: 36rem; padding: 3rem 0;}
 .students-affair .content { margin: 0; height: 100%; min-height: 36rem; display: flex; align-items: center;}
-.affair-cards { width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around; }
-.affair-card { flex: 0 1 450px; height: 300px; margin: 2rem 0;}
+.affair-cards { width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around; padding: 0 1.4rem;}
+.affair-card { flex: 0 1 390px; height: 300px; margin: 2rem 0;}
 .affair-card-a {  display: inline-flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background-color: white!important; box-shadow: 0px 0px 15px  rgba(0,0,0,.5); border-bottom: 2px solid #ac2325; border-radius: 4px;}
 .affair-card-a span { font-size: 22px; font-weight: bold; line-height: 40px;}
 .affair-content { word-wrap:break-word; width: 80%;  }
@@ -66,8 +67,9 @@ footer { margin: 0!important; }
   .search-hn-branch { flex: 0 1 100%;  flex-direction: column; }
   .search-hn-branch-pic { margin-bottom: 1rem; }
 
+  .club-culture { padding: 0; margin: 0;}
   .club { width: 100%; background-color: black;}
-  .culture { position: relative; width: 100%; background-color: black; }
+  .culture { position: relative; top: 0; width: 100%; background-color: black; }
   .club-culture-main .computer-pic { display: none; }
   .club-culture-main .mobile-pic { display: block; opacity: .6; height: 100%;}
   .club-des { width: 100%; height: 100%;}
