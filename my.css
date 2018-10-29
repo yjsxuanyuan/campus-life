@@ -32,28 +32,47 @@ html { }
 .public-service-title { color: #fff; }
 .icons-part { display: inline-flex; justify-content: center; width: 100%; flex-wrap: wrap; transition: all .5s ease;}
 .public-service-icons { white-space: nowrap; width: 100%; overflow: hidden; padding: 6rem 0;}
-.public-service-icon { text-align: center; flex: 0 1 30%; font-size: 18px; font-weight: bold; line-height: 50px;}
+.public-service-icon { text-align: center; flex: 0 1 30%; font-size: 24px; font-weight: bold; line-height: 40px;}
 .public-service-a { display: flex;  margin: 0 auto; width: 200px; height: 200px;  border-radius: 100px; background-color: rgba(255,255,255,0.4)!important; color: #122c4c!important; flex-direction: column; justify-content:center; align-items:center;}
 .public-service-a img { width: 100px; }
 
-.club-culture { position: relative; width: 100%;  padding: 6rem 0 10rem 0; /*background-image: url(images/club-culture/background.jpg); background-repeat: no-repeat; background-size: cover; */}
-.culture { position: absolute; height: 100%; top: 10rem; right: 0;}
+.club-culture { position: relative; width: 100%;  /*background-image: url(images/club-culture/background.jpg); background-repeat: no-repeat; background-size: cover; */}
+.culture { position: absolute; height: 100%; top: 0; right: 0;}
 .club { position: relative; height: 100%;}
-.club-culture-main { width: 60%;}
-.club-culture-main img { width: 100%; height: 21rem; vertical-align: middle; opacity: .9;}
+.club-culture-main { width: 60.9%;}
+.club-culture-main img { width: 100%; min-height: 32rem; vertical-align: middle; opacity: .9;}
 .club-des { width: 50%; height: 90%;}
-.culture-des { width: 50%; right: 0; height: 50%; }
+.culture-des { width: 50%; right: 0; height: 90%; }
 .des { position: absolute; top: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; word-wrap:break-word; }
 .club-culture-a:hover { text-decoration: underline; }
 .club-culture-a { width: 60%; color: #f0f0ff!important;}
+.mobile-pic { display: none; }
 
-.students-affair { background-image: url(images/students-affair/background.png); background-repeat: no-repeat; background-size: cover; height: 36rem;}
-.students-affair .content { margin: 0 12%; height: 100%; display: flex; align-items: center;}
+.students-affair { background-image: url(images/students-affair/background.png); background-repeat: no-repeat; background-size: cover; min-height: 36rem; padding: 3rem 0;}
+.students-affair .content { margin: 0; height: 100%; min-height: 36rem; display: flex; align-items: center;}
 .affair-cards { width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around; }
-.affair-card { flex: 0 1 30%;}
-.affair-card-a {  display: inline-flex; flex-direction: column; justify-content: center; align-items: center; width: 350px; height: 220px; background-color: white!important; box-shadow: 0px 0px 15px  rgba(0,0,0,.5); border-bottom: 2px solid #ac2325; border-radius: 4px;}
-.affair-card-a span { font-size: 16px; font-weight: bold; line-height: 40px;}
-.affair-content { word-wrap:break-word; width: 80%; }
+.affair-card { flex: 0 1 450px; height: 300px; margin: 2rem 0;}
+.affair-card-a {  display: inline-flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background-color: white!important; box-shadow: 0px 0px 15px  rgba(0,0,0,.5); border-bottom: 2px solid #ac2325; border-radius: 4px;}
+.affair-card-a span { font-size: 22px; font-weight: bold; line-height: 40px;}
+.affair-content { word-wrap:break-word; width: 80%;  }
 .affair-card-a:hover { color: #ac2325; }
 
 footer { margin: 0!important; }
+
+@media screen and (max-width: 800px) {
+  .search-hn { margin-bottom: 4rem; }
+  .search-hn-content { flex-direction: column;}
+  .search-hn-main { flex: 0 1 100%; margin: 0 0 1rem 0; }
+  .search-hn-branch { flex: 0 1 100%;  flex-direction: column; }
+  .search-hn-branch-pic { margin-bottom: 1rem; }
+
+  .club { width: 100%; background-color: black;}
+  .culture { position: relative; width: 100%; background-color: black; }
+  .club-culture-main .computer-pic { display: none; }
+  .club-culture-main .mobile-pic { display: block; opacity: .6; height: 100%;}
+  .club-des { width: 100%; height: 100%;}
+  .culture-des { width: 100%; height: 100%; }
+  .des h1 { text-align: center; }
+
+  .affair-card { flex: 0 1 350px; height: 250px;}
+}
