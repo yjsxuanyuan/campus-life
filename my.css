@@ -1,0 +1,19 @@
+.footer { margin: 0!important; }
+.main-div { margin: 80px 0;  }
+.content { position: relative; margin: 40px 14%; max-width: 2000px;}
+.no-decoration { text-decoration: none; }
+.no-decoration:hover, .no-decoration:active, .no-decoration:link, .no-decoration:visited { text-decoration: none; }
+.title { position: relative; margin: 0 14%; font-size: 36px; font-family: RobotoCondensed, sans-serif; font-weight: 700; line-height: 36px; padding: 30px 0 20px; border-bottom: 1px solid #e8e8e8; }
+img { vertical-align: middle; }
+
+
+.campus-life .content { display: flex; }
+.campus-life .title { color: #003f88; }
+.campus-life-main { flex: 0 1 57%; margin-right: 5%; overflow: hidden; border-radius: 2px; }
+.campus-life-branch { flex: 0 1 38%; display: flex; flex-direction: column; justify-content: space-between; }
+.branch-img { overflow: hidden; border-radius: 4px; }
+
+
+.campus-service .title { color: #003f88; text-align: right; }
+.icons-part { position: relative; display: inline-flex; justify-content: space-between; width: 60%; margin: 0 20%;}
+.icon-part { display: block; color: #003f88!important; text-align: center;}
