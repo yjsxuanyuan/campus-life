@@ -1,19 +1,54 @@
 .footer { margin: 0!important; }
 .main-div { margin: 80px 0;  }
-.content { position: relative; margin: 40px 14%; max-width: 2000px;}
+.content { position: relative; margin: 40px 10%; max-width: 2000px;}
 .no-decoration { text-decoration: none; }
 .no-decoration:hover, .no-decoration:active, .no-decoration:link, .no-decoration:visited { text-decoration: none; }
-.title { position: relative; margin: 0 14%; font-size: 36px; font-family: RobotoCondensed, sans-serif; font-weight: 700; line-height: 36px; padding: 30px 0 20px; border-bottom: 1px solid #e8e8e8; }
+.title { color: #003f88;  position: relative; margin: 0 10%; font-size: 36px; font-family: RobotoCondensed, sans-serif; font-weight: 700; line-height: 36px; padding: 30px 0 20px; border-bottom: 1px solid #e8e8e8; }
 img { vertical-align: middle; }
 
 
 .campus-life .content { display: flex; }
-.campus-life .title { color: #003f88; }
 .campus-life-main { flex: 0 1 57%; margin-right: 5%; overflow: hidden; border-radius: 2px; }
 .campus-life-branch { flex: 0 1 38%; display: flex; flex-direction: column; justify-content: space-between; }
 .branch-img { overflow: hidden; border-radius: 4px; }
 
 
-.campus-service .title { color: #003f88; text-align: right; }
-.icons-part { position: relative; display: inline-flex; justify-content: space-between; width: 60%; margin: 0 20%;}
+.campus-service .title { text-align: right; }
+.campus-service-icons { white-space: nowrap; overflow: hidden; }
+.icons-part { position: relative; display: inline-flex; justify-content: space-between; width: 64%; margin: 30px 18%; flex-wrap: nowrap;}
 .icon-part { display: block; color: #003f88!important; text-align: center;}
+.arrow { position: absolute; width: 10%; height: 90%; z-index: 5; background-size: contain; background-repeat: no-repeat;}
+.go-left { left: 0; background-position: left; background-image: url(images/public_service/arrow-left.png); }
+.go-right { right: 0; background-position: right; background-image: url(images/public_service/arrow-right.png); }
+
+.search-hn { height: 300px; background-color: #222; }
+.search-hn .content { color: white; height: 100%; }
+.words { position: absolute; display:flex; height: 100%; max-width: 40%; flex-direction: column; justify-content: center; word-wrap: break-word;}
+.words h3 { margin-top: 0; color: #fff;}
+.words .no-decoration { color: #f9f9f9; }
+.words .no-decoration:hover { text-decoration: underline; }
+
+.students-affair {}
+.students-affair .content { height: 100%; display: flex; align-items: center;}
+.affair-cards { width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around; padding: 0 1.4rem;}
+.affair-card { flex: 0 1 300px; height: 300px; margin: 15px 0;}
+.affair-card-a {  display: inline-flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background-color: white!important; box-shadow: 0px 0px 15px  rgba(0,0,0,.5); border-bottom: 2px solid #ac2325; border-radius: 4px;}
+.affair-card-a span { font-size: 22px; font-weight: bold; line-height: 40px; color: #333;}
+.affair-content { word-wrap:break-word; width: 80%; color: #666;}
+.affair-card-a:hover span, .affair-card-a:hover .affair-content{ color: #ac2325; }
+
+.campus { margin: -80px 0 0 0; }
+.campus-row { display: flex; margin: 0; position: relative; background-color: #fff; align-items: center;}
+.campus-row img { width: 50%; height: 50%;}
+.campus-des { display: inline-block; width: 50%; }
+.campus-des-words { max-width: 50%; margin: 0 auto; word-wrap: break-word;}
+.campus-des-words h2 {color: #333;}
+.campus-des-words p {color: #666;}
+.campus-des-words:hover h2, .campus-des-words:hover p { color: #ac2325; }
+
+.news {margin: 0; height: 600px; background-color: #222; }
+.news .content { color: white; height: 100%; margin: 0 15%;}
+.words { position: absolute; display:flex; height: 100%; max-width: 30%; flex-direction: column; justify-content: center; word-wrap: break-word;}
+.words h1 { margin-top: 0; color: #fff;}
+.words .no-decoration { color: #f9f9f9; }
+.words .no-decoration:hover { text-decoration: underline; }
