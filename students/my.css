@@ -1,0 +1,35 @@
+.layout-center { max-width: 1280px; }
+.view-id-student_module .views-row .views-column { margin-right: 60px; }
+
+.students { margin-top: 20px; display: flex; flex-direction: row; margin-bottom: 30px; justify-content: space-between; margin-bottom: 100px;}
+.students-news { flex: 0 1 65%; padding: 0 30px; }
+.students-activities { flex: 0 1 33%; padding: 0 30px;}
+.title { text-align: center; font-size: 34px; font-weight: bold; color: #266489; border-bottom: 2px dashed #b5b5b5; line-height: 70px;}
+.students-end { text-align: center; font-size: 22px;  margin-top : 40px; padding: 20px 0; border-bottom: 2px dashed #b5b5b5;  }
+.students-end a { color: #b01f24; opacity: .5; font-weight: 700; transition: opacity 1s ease; }
+.students-end a:hover { opacity: 1; }
+.students-news-title { border-top: 4px solid #2873f3; }
+.students-activities-title { border-top: 4px solid #e16d71; }
+.content { padding-top: 20px; }
+.students-one-new { position: relative; margin-top: 50px; height: 270px;}
+.students-one-new img { height: 270px; vertical-align: middle; position: absolute; }
+.news-info { position: absolute; box-sizing: border-box; height: 250px; background-color: hsla(0,0%,100%,.85); top: 0; bottom: 0; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,.15); padding:  30px 50px;}
+.info-title { font-size: 18px; color: #003f88; font-weight: bold; }
+.info-date { color: #555; font-size: 12px; line-height: 40px;}
+.info-summary { overflow:hidden; word-wrap: break-word;  text-overflow:ellipsis; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; font-size: 14px; color: #333; line-height: 20px;}
+.info-more { position: absolute; display: block; margin-top: 20px; border: 1px solid #b01f24; padding: 8px 20px; font-size: 14px; line-height: 14px; color: #b01f24; transition: all .5s ease; border-radius: 2px; }
+.info-more:hover { cursor: pointer; color: #fbfbf9; background-color: #b01f24;}
+.new-left  img { left: 0; }
+.new-right img { right: 0; }
+.new-left .news-info { right: 0; }
+.new-right .news-info { left: 0; }
+
+.student-one-activity { position: relative; margin-top: 50px; }
+.activity-info { box-sizing: border-box; height: 220px; width: 100%; background-color: #fff; border: 1px solid #e3e6ea; padding: 0 50px;}
+.activity-date-up {height: 45px; width: 90px; background-color: #b01f24; margin: 0 auto; text-align: center; color: white; font-size: 16px; line-height: 45px; border-radius: 7px 7px 0 0;}
+.activity-date-bottom { z-index: 5; position: absolute; height: 45px; width: 90px; background-color: #e16d71; left: 0; right: 0; margin: auto; text-align: center; color: white; font-size: 20px; line-height: 45px; font-weight: bold; border-radius: 0 0 7px 7px;}
+.activity-info-position { margin-top: 60px; text-align: center; color: #666; line-height: 60px;}
+.activity-info-name { text-align: center; }
+.activity-info-name a { color: #003f88; font-weight: 700; }
+
+
