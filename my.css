@@ -11,7 +11,7 @@ img { vertical-align: middle; }
 .campus-life-main { position: relative; flex: 0 1 57%; margin-right: 5%; overflow: hidden; border-radius: 2px; }
 .campus-life-branch { flex: 0 1 38%; display: flex; flex-direction: column; justify-content: space-between; }
 .branch-img { overflow: hidden; border-radius: 4px; }
-.img-des { position: absolute; bottom: 0; width: 100%; background-color: #000; color: white; text-align: right; font-size: 22px; padding: 10px; opacity: .8;}
+.img-des { position: absolute; bottom: 0; width: 100%; background-color: #000; color: white; text-align: right; font-size: 30px; padding: 20px; opacity: .8;}
 
 .campus-service .content { margin-bottom: 15px; }
 .campus-service .title { text-align: right;}
