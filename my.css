@@ -49,7 +49,7 @@ img { vertical-align: middle; }
 .campus-des { display: inline-block; width: 50%; }
 .campus-des-words { max-width: 50%; margin: 0 auto; word-wrap: break-word; }
 .campus-des-words h1 {color: #333;}
-.campus-des-words p {color: #666;}
+.campus-des-words p {color: #666; line-height: 30px;}
 .campus-des-words:hover h1, .campus-des-words:hover p { color: #ac2325; }
 
 /*.campus-row img:nth-child(even) { position: relative; left: 50%; }
